@@ -70,6 +70,51 @@ This project implements an Adaptive Request Monitoring System using an Arduino w
 - Upload the code to the Arduino using the Arduino IDE.
 - Monitor the Serial Output to observe request counts and alerts.
 - Adjust the Base Threshold as needed depending on expected network traffic.
+
+
+## Pro & Cons
+
+### Pros
+
+1. **DDoS Detection and Mitigation**:  
+   The program includes functionality to detect potential DDoS attacks by monitoring the rate of incoming requests and comparing them against an adaptive threshold. This helps to protect the server from being overwhelmed by malicious traffic.
+
+2. **Adaptive Threshold Mechanism**:  
+   Instead of using a static threshold, the program dynamically adjusts the request threshold based on the rolling average of requests. This makes it more resilient to varying levels of legitimate traffic and reduces the chances of false positives.
+
+3. **Logging and Monitoring**:  
+   The program periodically logs request counts, adaptive thresholds, and blocked IP addresses, providing valuable information for monitoring server activity and troubleshooting.
+
+4. **Blocking Capability**:  
+   It can block IP addresses that are suspected of malicious behavior, helping to prevent further unwanted traffic from those sources. This is done dynamically, based on detected anomalies.
+
+5. **Simple and Easy to Integrate**:  
+   The program uses standard Arduino libraries and is straightforward to integrate into existing Ethernet-based projects. The code is modular, making it easy to understand and modify.
+
+6. **Alert System**:  
+   The inclusion of an alert mechanism (using an LED or buzzer) provides a quick, visual or audible indication of potential issues, allowing for rapid response to threats.
+
+### Cons
+
+1. **Limited Block List Size**:  
+   The block list is capped at a maximum size of 10 IP addresses, which might not be sufficient for handling large-scale DDoS attacks with numerous offending IPs.
+
+2. **Simple Detection Logic**:  
+   The detection method is based on request rate, which might not catch more sophisticated DDoS attacks that use low-rate or distributed techniques to evade detection.
+
+3. **Resource Constraints**:  
+   Since the program is designed to run on Arduino hardware, it is limited by the processing power and memory of the microcontroller. This can limit the scalability and effectiveness of the DDoS mitigation.
+
+4. **No Persistent Storage**:  
+   The block list and request logs are stored in memory and will be lost if the device is restarted. There is no mechanism to persist this information to non-volatile storage.
+
+5. **False Positives**:  
+   In high-traffic environments, legitimate spikes in traffic could be mistaken for DDoS attacks, leading to unnecessary blocking of IPs and potential denial of service to legitimate users.
+
+6. **Manual Reset Required**:  
+   If an IP is blocked due to a false positive, it requires manual intervention to reset or clear the block list, which can be inconvenient and may disrupt legitimate service.
+
+
 ## Future Enhancement
 
 - Logging: Implement detailed logging for each request for further analysis.
